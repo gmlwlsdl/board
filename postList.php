@@ -43,7 +43,7 @@ $cnt=$start+1; // 시작 글 번호
 while($array=mysqli_fetch_array($result2)){
     ?>
     <tr>
-        <td><?php echo $cnt; ?></td>
+        <td><a href="read.php?num=<?php echo $array["num"]; ?>"><?php echo $array["num"]; ?></a></td>
         <?php
         $_SESSION['num']=$cnt;
         $sql3="UPDATE post SET num='$cnt' WHERE title='".$array["title"]."' ";

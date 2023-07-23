@@ -1,6 +1,18 @@
 <?php 
     session_start();
     require_once("db.php");
+
+    if(!empty($_GET['title'])){
+        $bno=$_GET['title'];
+    }
+    else if(!empty($_GET['num'])){
+        $bno=$_GET['num'];
+    }
+    $sql="SELECT * FROM post WHERE title='$bno' OR num='$bno' ";
+    $result=mysqli_query($conn, $sql);
+    $board=mysqli_fetch_array($result);
+    $num=$board['num']; 
+    $view=$board['view_cnt']+1;
 ?>
 
 <!DOCTYPE html>
@@ -8,17 +20,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php $_get['num']?>번째 글</title>
+    <title><?php echo $num?>번째 글</title>
 </head>
 <body>
     <?php
-        $num=$_SESSION['num'];
-        $bno=$_GET['title'];
-        $sql="SELECT * FROM post WHERE title='$bno' ";
-        $result=mysqli_query($conn, $sql);
-        $board=mysqli_fetch_array($result);
-        $view=$board['view_cnt']+1;
-
         $sql2="UPDATE post SET view_cnt='$view' WHERE title='$bno' ";
         $result2=mysqli_query($conn,$sql2);
         ?>
@@ -64,11 +69,11 @@
             <h3>댓글목록</h3>
             <?php 
                 $post_num=$board['num'];
-                $sql="SELECT * FROM reply WHERE post_num='$post_num' ORDER BY idx DESC";
+                $sql="SELECT * FROM reply WHERE post_num='$post_num' ORDER BY date ASC";
                 $result=mysqli_query($conn, $sql);
-                $reply=mysqli_fetch_assoc($result);
-                $count=mysqli_num_rows($result);
-                if($count>0){?>
+                
+                //$count=mysqli_num_rows($result);
+                while($reply=mysqli_fetch_assoc($result)){ ?>
                     <div><b><?php echo $reply['name'];?></b></div>
                     <div><?php echo $reply['content']?></div>
                     <div><p><?php echo $reply['date']?></div>
@@ -86,21 +91,29 @@
                             <input type="text" name="pw" placeholder="password">
                             <input type="hidden" name="idx" value="<?php echo $reply['idx'];?>">
                             <input type="hidden" name="name" value="<?php echo $reply['name'];?>">
+                            <input type="hidden" name="post_num" value="<?php echo $post_num;?>">
                             <input type="submit" value="삭제"/>
                         </form>
                      </div>
-                <?php }?>
+                    <br>
+                    <br>
+                <?php }  ?>
+                
         </div>
         <br>
         <hr>
         <div>
         <h3>댓글달기</h3>
             <form method="get" action="reply.php" >
-                <input type="text" name=id placeholder="ID">
-                <input type="text" name=pw placeholder="PASSWORD"><br>
+                <!-- <input type="text" name=id placeholder="ID">
+                <input type="text" name=pw placeholder="PASSWORD"><br> -->
+                <b><?php echo $_SESSION['Name']; ?></b><br>
                 <textarea name="contents" cols="80" rows="5"></textarea>
                 <input type="hidden" name="post_num" value=<?php echo $num;?>>
-                <input type="hidden" name="title" value=<?php echo $board['title'];?>>
+                <input type="hidden" name="id" value=<?php echo $_SESSION['ID'];?>>
+                <input type="hidden" name="pw" value=<?php echo $_SESSION['PW'];?>>
+                <!-- <input type="hidden" name="num" value=<?php echo $board['num'];?>> -->
+                
                 <input type="submit" value="댓글" />
             </form>
         </div>
