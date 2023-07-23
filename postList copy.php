@@ -1,3 +1,5 @@
+//안 쓰는 파일
+
 <?php 
 session_start();
 require_once("db.php");
