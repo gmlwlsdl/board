@@ -16,7 +16,7 @@
         $num=$_GET['num'];
         $writer=$_GET['writer'];
         $pw=$_GET['pw'];
-        $sql="SELECT * FROM post WHERE num='$num'&&writer='$writer' ";
+        $sql="SELECT * FROM post WHERE num='$num'&& writer='$writer' ";
         $result=mysqli_query($conn, $sql);
         $row=mysqli_fetch_array($result);
             if($row['wr_pw']==$pw){
@@ -44,23 +44,43 @@
             $sql2 = "DELETE FROM reply WHERE idx='$idx' ";
             $result = mysqli_query($conn, $sql2);
 
-            $sql3 = "SELECT * FROM reply ORDER BY date ASC";
+            $sql3 = "SELECT * FROM reply";
             $result2 = mysqli_query($conn, $sql3);
             $rows = mysqli_num_rows($result2);
-            $x=1;
+            $x=0;
+            $y=1;
 
             if ($rows == 0) {
                 $_SESSION['reply_count'] = 0;
             } else {
-                while ($array = mysqli_fetch_array($result2)) {
-                    $cnt=$_SESSION['reply_count']-$row;
-                    $sql4 = "UPDATE reply SET idx='$cnt' ORDER BY date ASC LIMIT '$x' ";
-                    $result3 = mysqli_query($conn, $sql4);
-                    $row--;
-                    $x++;
+                while ($array = mysqli_fetch_array($result2) && $rows!=0 ) {
+                    if($x>$rows){
+                        break;
+                    }
+                    else{
+                        $c=0;
+                        $count=$_SESSION['reply_count'];
+                        $cnt=$count-$rows;
+                        $sql4 = "CREATE TEMPORARY TABLE temp_reply AS (SELECT date FROM reply ORDER BY date ASC LIMIT $x,$y)";
+                        $result_temp = mysqli_query($conn, $sql4);
+
+                        $sql5 = "UPDATE reply SET idx='$cnt' WHERE date=(SELECT date FROM temp_reply)";
+                        $result3 = mysqli_query($conn, $sql5);
+
+                        // Drop the temporary table
+                        $sql6 = "DROP TEMPORARY TABLE IF EXISTS temp_reply";
+                        $result_drop = mysqli_query($conn, $sql6);
+
+                        //$sql4 = "UPDATE reply SET idx='$cnt' WHERE date=(SELECT date FROM reply ORDER BY date ASC LIMIT $x) ";
+                        //$result3 = mysqli_query($conn, $sql4);
+                        $rows--;
+                        $x++;
+                        $c++; 
+                    }
                 }
+                $_SESSION['reply_count']-=$c;
             }
-            
+
             echo '<script type="text/javascript">';
             echo 'alert("댓글이 삭제되었습니다.");';
             echo 'window.location.href = "read.php?num='.$_GET['post_num'].' "';

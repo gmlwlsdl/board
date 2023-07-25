@@ -78,11 +78,12 @@
                     <div><?php echo $reply['content']?></div>
                     <div><p><?php echo $reply['date']?></div>
                     <div style="float:left;">
-                        <form action="get" action="reply.php">
+                        <form action="get" action="re_reply.php">
                             <input type="text" name="pw" placeholder="password">
                             <input type="hidden" name="idx" value="<?php echo $reply['idx'];?>">
                             <input type="hidden" name="post_num" value="<?php echo $reply['post_num'];?>">
-                            <input type="hidden" name="r_contents" value="<?php echo $reply['content'];?>">
+                            <input type="hidden" name="name" value="<?php echo $reply['name'];?>">
+                            <input type="hidden" name="contents" value="<?php echo $reply['content'];?>">
                             <input type="submit" value="수정"/>
                         </form>
                     </div>
