@@ -110,7 +110,7 @@
         </div>
         <br>
         <center>
-            <a href="logout.php">logout</a>
+            <a href="home.php">home</a> / <a href="logout.php">logout</a> 
         </center>
     </p>
 </body>
