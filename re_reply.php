@@ -19,7 +19,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $num?>번째 글</title>
+    <title><?php echo $num?>번째 글</title>    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <?php
@@ -27,23 +28,22 @@
         $result2=mysqli_query($conn,$sql2);
         ?>
         <div>
-            <h2><?php echo $board['num'];?><br></h2>
-            제목 : <?php echo $board['title'];?>
+            <h2><?php echo $board['title'];?><br></h2>
         </div>
         <div>
-            작성자 : <?php echo $board['writer'];?> 작성일 : <?php echo $board['write_date'];?> 조회수 : <?php echo $board['view_cnt'];?>
+            <?php echo $board['writer'];?> | <?php echo $board['write_date'];?> | <?php echo $board['view_cnt'];?>
         </div>
         <div style="height: auto;">
             <hr/>
             <?php echo $board['contents'];?>
         </div>
-        <div style="padding:0 0 0 10px; float:right;">
+        <div id="right">
             <form method="get" action="postList.php">
                 <input type="hidden" name="page" value="1">
                 <input type="submit" value="글 목록"/>       
             </form>
         </div>
-        <div style="padding:0 0 0 10px; float:right;">
+        <div id="right">
                 <form method="get" action="writeForm.php">
                     <input type="text" name="pw" placeholder="password">
                     <input type="hidden" name="r_title" value="<?php echo $board['title'];?>">
@@ -54,7 +54,7 @@
                     <input type="submit" value="수정"/>
                 </form>
         </div>
-        <div style="padding:0 0 0 10px; float:right;">
+        <div id="right">
             <form method="get" action="del.php">
                 <input type="text" name="pw" placeholder="password">
                 <input type="hidden" name="num" value="<?php echo $board['num'];?>">
@@ -75,7 +75,7 @@
                     }?>
                     <div><b><?php echo $reply['name'];?></b></div>
                     <div><?php echo $reply['content']?></div>
-                    <div><p><?php echo $reply['date']?></div>
+                    <div style="color: gray;"><p><?php echo $reply['date']?></div>
                     <br>
                     <br>
                 <?php }  ?>
@@ -84,10 +84,9 @@
         <br>
         <hr>
         <div>
-        <h3>댓글달기</h3>
-                <form method="get" action="reply.php" >
+            <form method="get" action="reply.php" >
                     <b><?php echo $_SESSION['Name']; ?></b><br>
-                    <textarea name="re_contents" cols="80" rows="5"><?php echo $re_contents;?></textarea>
+                    <textarea name="re_contents" style="width: 100%; height: 50px;"><?php echo $re_contents;?></textarea>
                     <input type="text" name="re_pw" placeholder="password">
                     <input type="hidden" name="re_post_num" value=<?php echo $num;?>>
                     <input type="hidden" name="re_id" value=<?php echo $_SESSION['ID'];?>>
