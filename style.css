@@ -18,3 +18,49 @@ table{
     padding:0 0 0 10px; 
     float:left;
 }
+
+#b1{
+    background-color: transparent;
+    color: black;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid black;
+    display: inline-block;
+    
+}
+
+#b2{
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#b3{
+    background-color: transparent;
+    border: 1px solid #AFB0BF;
+    border-radius: 5px;
+    width: 100%; 
+    height: 500px;
+}
+
+#b4{
+    background-color: transparent;
+    border: 1px solid #AFB0BF;
+    border-radius: 5px;
+    width: 100%; 
+    height: 100px;
+}
+
+.bt{
+    text-align: center;
+}
+
+#input{
+    background-color: transparent;
+    color: black;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid black;
+}

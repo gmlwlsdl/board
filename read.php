@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body style="background-color: #DBDCEF;">
     <?php
         $sql2="UPDATE post SET view_cnt='$view' WHERE title='$bno' ";
         $result2=mysqli_query($conn,$sql2);
@@ -42,7 +42,7 @@
         <div id="right">
             <form method="get" action="postList.php">
                 <input type="hidden" name="page" value="1">
-                <input type="submit" value="글 목록"/>       
+                <input type="submit" id="b2" value="글 목록"/>       
             </form>
         </div>
         
@@ -53,15 +53,15 @@
                     <input type="hidden" name="title" value="<?php echo $board['title'];?>">
                     <input type="hidden" name="contents" value="<?php echo $board['contents'];?>">
                     <input type="hidden" name="num" value="<?php echo $board['num'];?>">
-                    <input type="submit" value="수정"/>
+                    <input type="submit" id="b2" value="수정"/>
                 </form>
         </div>
         <div id="right">
             <form method="get" action="del.php">
-                <input type="text" name="pw" placeholder="password">
+                <input type="text" id="b1" name="pw" placeholder="password">
                 <input type="hidden" name="num" value="<?php echo $board['num'];?>">
                 <input type="hidden" name="writer" value="<?php echo $board['writer'];?>">
-                <input type="submit" value="삭제"/>
+                <input type="submit" id="b2" value="삭제"/>
             </form>
         </div>
         <br>
@@ -85,16 +85,16 @@
                                 <input type="hidden" name="re_name" value="<?php echo $reply['name'];?>">
                                 <input type="hidden" name="re_contents" value="<?php echo $reply['content'];?>">
                                 
-                                <input type="submit" value="수정"/>
+                                <input type="submit" id="b2" value="수정"/>
                             </form>
                         </div>
                         <div id="right">
                             <form method="get" action="del.php">
-                                <input type="text" name="re_pw" placeholder="password">
+                                <input type="text" id="b1" name="re_pw" placeholder="password">
                                 <input type="hidden" name="idx" value="<?php echo $reply['idx'];?>">
                                 <input type="hidden" name="name" value="<?php echo $reply['name'];?>">
                                 <input type="hidden" name="post_num" value="<?php echo $post_num;?>">
-                                <input type="submit" value="삭제"/>
+                                <input type="submit" id="b2" value="삭제"/>
                             </form>
                          </div>
                         <br>
@@ -108,11 +108,11 @@
         <div>
             <form method="get" action="reply.php" >
                 <b><?php echo $_SESSION['Name']; ?></b><br>
-                <textarea name="contents" placeholder="댓글 쓰기" style="width: 100%; height: 100px;"></textarea>
+                <textarea name="contents" id="b4" placeholder="댓글 쓰기"></textarea>
                 <input type="hidden" name="post_num" value=<?php echo $num;?>>
                 <input type="hidden" name="id" value=<?php echo $_SESSION['ID'];?>>
                 <input type="hidden" name="pw" value=<?php echo $_SESSION['PW'];?>>
-                <input type="submit" value="등록" />
+                <input type="submit" id="b2" value="등록" />
             </form>
         </div>
         

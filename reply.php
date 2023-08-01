@@ -8,7 +8,7 @@ if(!empty($_GET['id'])&&!empty($_GET['pw'])
     $pw=$_GET['pw'];
     $contents=$_GET['contents'];
     $post_num=$_GET['post_num'];
-    if($_SESSION['reply_count']==1 || $_SESSION['reply_count']>1){
+    if(!empty($_SESSION['reply_count']) && ($_SESSION['reply_count']==1 || $_SESSION['reply_count']>1)){
         $_SESSION['reply_count']++;
         $count=$_SESSION['reply_count'];
     }
@@ -36,7 +36,7 @@ if(!empty($_GET['id'])&&!empty($_GET['pw'])
             $_SESSION['reply_Name']=$row['name'];
             $rc=$_SESSION['reply_count'];
             echo '<script type="text/javascript">'; 
-            echo 'alert("'.$_SESSION['reply_count'].'번째 댓글 등록 성공");';
+            echo 'alert("댓글 등록 성공");';
             echo 'window.location.href = "read.php?num='.$post_num.'";';
             echo '</script>';
         }
@@ -78,7 +78,7 @@ else if(!empty($_GET['re_pw'])&&!empty($_GET['re_id'])
             $_SESSION['reply_PW']=$row['pw'];
             $_SESSION['reply_Name']=$row['name'];
             echo '<script type="text/javascript">'; 
-            echo 'alert("'.$re_idx.'번째 댓글 수정 완료");';
+            echo 'alert("댓글 수정 완료");';
             echo 'window.location.href = "read.php?num='.$re_post_num.'";';
             echo '</script>';
         }

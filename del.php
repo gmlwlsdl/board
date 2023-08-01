@@ -22,9 +22,48 @@
             if($row['wr_pw']==$pw){
                 $sql2="DELETE FROM post WHERE num='$num' ";
                 $result=mysqli_query($conn, $sql2);
+
+                $sql3 = "SELECT * FROM post";
+                $result2 = mysqli_query($conn, $sql3);
+                $rows = mysqli_num_rows($result2);
+                $x=0;
+                $y=1;
+
+                if ($rows == 0) {
+                    echo '<script type="text/javascript">'; 
+                    echo 'alert("글이 삭제되었습니다.");';
+                    echo 'window.location.href = "postList.php";';
+                    echo '</script>';
+                } else {
+                    while ($array = mysqli_fetch_array($result2) && $rows!=0 ) {
+                        if($x>$rows){
+                            break;
+                        }
+                        else{
+                            $c=0;
+                            $count=$rows;
+                            $cnt=$count-$rows;
+                            $sql4 = "CREATE TEMPORARY TABLE temp_post AS (SELECT write_date FROM post ORDER BY write_date ASC LIMIT $x,$y)";
+                            $result_temp = mysqli_query($conn, $sql4);
+
+                            $sql5 = "UPDATE post SET num='$cnt' WHERE write_date=(SELECT write_date FROM temp_post)";
+                            $result3 = mysqli_query($conn, $sql5);
+
+                            // Drop the temporary table
+                            $sql6 = "DROP TEMPORARY TABLE IF EXISTS temp_post";
+                            $result_drop = mysqli_query($conn, $sql6);
+
+                            //$sql4 = "UPDATE reply SET idx='$cnt' WHERE date=(SELECT date FROM reply ORDER BY date ASC LIMIT $x) ";
+                            //$result3 = mysqli_query($conn, $sql4);
+                            $rows--;
+                            $x++;
+                            $c++; 
+                        }
+                    }
+                }
                 echo '<script type="text/javascript">'; 
                 echo 'alert("글이 삭제되었습니다.");';
-                echo 'window.location.href = "home.php";';
+                echo 'window.location.href = "postList.php";';
                 echo '</script>';
             }
             else{
@@ -33,10 +72,10 @@
                 echo 'window.location.href = "postList.php";';
                 echo '</script>';}
     }
-    else if (!empty($_GET['idx']) && !empty($_GET['name']) &&!empty($_GET['pw'])) {
+    else if (!empty($_GET['idx']) && !empty($_GET['name']) &&!empty($_GET['re_pw'])) {
         $idx=$_GET['idx'];
         $name=$_GET['name'];
-        $pw=$_GET['pw'];
+        $pw=$_GET['re_pw'];
         $sql = "SELECT * FROM reply WHERE idx='$idx'&& name='$name' ";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result);

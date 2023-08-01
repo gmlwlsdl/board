@@ -6,14 +6,16 @@
     <title>홈</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="background-color: #DBDCEF;">
     <?php 
     session_start();
     require_once("db.php");?>
 
     <h1>Hello, <?php echo $_SESSION['Name']; ?></h1>
+    <div style="color: gray;"><b>게시글 순서가 맞지 않을 땐, 새로고침을 해주세요 ㅜ,ㅜ</b></div>
+
     <div id="right">
-        <input type="button" value="글 쓰기" onclick="location.href='writeForm.php'">
+        <input type="button" value="글 쓰기" id="b2" onclick="location.href='writeForm.php'">
     </div>
     <div id="right">
         <form action="search.php" method="get">
@@ -22,8 +24,8 @@
                 <option value="title">제목</option>
                 <option value="writer">글쓴이</option>
             </select>
-            <input type="text" placeholder="검색어" name="search">
-            <input type="submit" value="검색">
+            <input type="text" id="b1" placeholder="검색어" name="search">
+            <input type="submit" id="b2" value="검색">
         </form>
         </div>
     <?php
@@ -58,12 +60,13 @@
     $cnt=$start+1; // 시작 글 번호
     ?>
     <table>
-        <th>no</th>
-        <th>title</th>
-        <th>writer</th>
-        <th>date</th>
-        <th>view</th>
-    
+        <tr bgcolor="#c5c6d7">
+            <th>no</th>
+            <th>title</th>
+            <th>writer</th>
+            <th>date</th>
+            <th>view</th>
+        </tr>
     <?php
     while($array=mysqli_fetch_array($result2)){
         ?>
