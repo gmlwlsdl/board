@@ -27,6 +27,9 @@
         <input type="button" value="글 쓰기" id="b2" onclick="location.href='writeForm.php'">
     </div>
     <div id="right">
+        <input type="button" value="글 목록" id="b2" onclick="location.href='postList.php'">
+    </div>
+    <div id="right">
         <form action="search.php" method="get">
             <select name="catalog">
                 <option value="num">글번호</option>
