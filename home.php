@@ -22,7 +22,11 @@
                     <input type="submit" id="b2" value="글 목록"/>
                     </form>
                 </div> 
-            </div><br>
+            </div>
+            <div>
+                <img src="C:\APM\Apache24\htdocs\콩도리밤도리.webp" alt="콩밤">
+            </div>
+            <br>
    <center><a href="logout.php">logout</a></center>
 </body>
 </html>
