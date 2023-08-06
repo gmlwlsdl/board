@@ -12,7 +12,7 @@
     require_once("db.php");?>
 
     <h1>Hello, <?php echo $_SESSION['Name']; ?></h1>
-    <div style="color: gray;"><b>게시글 순서가 맞지 않을 땐, 새로고침을 해주세요 ㅜ,ㅜ</b></div>
+    <div style="color: gray;"><b>게시글 순서가 맞지 않을 땐 새로고침을 해주세요 ㅜ,ㅜ</b></div>
 
     <div id="right">
         <input type="button" value="글 쓰기" id="b2" onclick="location.href='writeForm.php'">
